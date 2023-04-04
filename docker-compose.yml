@@ -1,0 +1,25 @@
+version: '3'
+services:
+  db:
+    container_name: questioning-musseukgi-db
+    image: mysql
+    environment:
+      MYSQL_DATABASE: app
+      MYSQL_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      MYSQL_ROOT_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      TZ: Asia/Seoul
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysqldata:/var/lib/mysql
+    restart: always
+
+  app:
+    container_name: app
+    image: joosungkwon/questioning-musseukgi
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}

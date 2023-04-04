@@ -1,9 +1,13 @@
-package com.kwonjs.questioningmusseukgi.domain.question.model;
+package com.kwonjs.questioningmusseukgi.question.model;
 
 import static javax.persistence.EnumType.*;
 import static javax.persistence.GenerationType.*;
 import static lombok.AccessLevel.*;
 
+import java.util.Objects;
+
+import javax.persistence.AttributeConverter;
+import javax.persistence.Converter;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -31,12 +35,14 @@ public class Question {
 
 	private String content;
 
+	private boolean deleted;
+
 	public Question(Subject subject, String content) {
 		this.subject = subject;
 		this.content = content;
 	}
 
 	public String toTemplate() {
-		return String.format("%s) %s", subject, content);
+		return String.format("(%s) %s", subject, content);
 	}
 }

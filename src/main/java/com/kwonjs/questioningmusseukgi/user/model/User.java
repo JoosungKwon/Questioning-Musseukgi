@@ -1,11 +1,10 @@
-package com.kwonjs.questioningmusseukgi.domain.user.model;
+package com.kwonjs.questioningmusseukgi.user.model;
 
 import static javax.persistence.GenerationType.*;
 import static lombok.AccessLevel.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -29,12 +28,22 @@ public class User {
 	@GeneratedValue(strategy = IDENTITY)
 	private Long id;
 
-	@Column(nullable = false, length = 20)
 	private String nickname;
 
-	@Column(nullable = false)
+	private String musseukgiName;
+
+	private String iconEmoji;
+
+	private String channel;
+
 	private String slackWebhookUrl;
 
-	@Column(nullable = false)
-	private LocalDateTime notificationTime;
+	private String generatorType;
+
+	private String senderName;
+
+	private LocalTime notificationTime;
+
+	private boolean deleted;
+
 }
