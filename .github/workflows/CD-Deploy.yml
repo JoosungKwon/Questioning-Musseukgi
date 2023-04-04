@@ -28,6 +28,7 @@ jobs:
           host: ${{ secrets.DEV_HOST }}
           username: ${{ secrets.DEV_USERNAME }}
           password: ${{ secrets.DEV_PASSWORD }}
+          port: 22
           source: "./.env"
           target: "/home/app/"
 
@@ -47,7 +48,6 @@ jobs:
           host: ${{ secrets.DEV_HOST }}
           username: ${{ secrets.DEV_USERNAME }}
           password: ${{ secrets.DEV_PASSWORD }}
-          key: ${{ secrets.DEV_PRIVATE_KEY }}
           port: 22
           source: "./docker-compose.yml"
           target: "/home/app/"
