@@ -24,3 +24,11 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
         default_batch_fetch_size: 100
+  # scheduler 설정
+  task:
+    scheduling: # 동기 작업
+      pool:
+        size: 3
+    execution: # 비동기 작업
+      pool:
+        core-size: 10
