@@ -1,4 +1,4 @@
-package com.kwonjs.questioningmusseukgi.domain.question.model;
+package com.kwonjs.questioningmusseukgi.question.model;
 
 import static javax.persistence.EnumType.*;
 import static javax.persistence.GenerationType.*;
@@ -31,12 +31,14 @@ public class Question {
 
 	private String content;
 
+	private boolean deleted;
+
 	public Question(Subject subject, String content) {
 		this.subject = subject;
 		this.content = content;
 	}
 
 	public String toTemplate() {
-		return String.format("%s) %s", subject, content);
+		return String.format("(%s) %s", subject, content);
 	}
 }
