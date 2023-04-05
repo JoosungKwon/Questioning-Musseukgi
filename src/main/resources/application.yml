@@ -36,3 +36,9 @@ spring:
     execution: # 비동기 작업
       pool:
         core-size: 10
+
+# sql 로그 설정
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql: trace
