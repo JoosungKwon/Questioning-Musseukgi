@@ -1,0 +1,44 @@
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  # DB 설정
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    # 커넥션 풀 설정
+    hikari:
+      minimum-idle: 1
+      maximum-pool-size: 5
+      pool-name: MYSQL_DB
+  # JPA 설정
+  jpa:
+    database: mysql
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+        default_batch_fetch_size: 100
+  # flyway 설정
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+  # scheduler 설정
+  task:
+    scheduling: # 동기 작업
+      pool:
+        size: 3
+    execution: # 비동기 작업
+      pool:
+        core-size: 10
+
+# sql 로그 설정
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql: trace
