@@ -30,7 +30,7 @@ jobs:
           username: ${{ secrets.DEV_USERNAME }}
           password: ${{ secrets.DEV_PASSWORD }}
           source: "./.env"
-          target: "/home/app/"
+          target: "/root"
 
       - name: Build with Gradle
         run: ./gradlew clean bootJar
@@ -50,7 +50,7 @@ jobs:
           password: ${{ secrets.DEV_PASSWORD }}
           port: 22
           source: "./docker-compose.yml"
-          target: "/home/app/"
+          target: "/root"
 
       # 도커 컴포즈 실행하기
       # 도커 허브에서 jar파일 및 pull후에 컴포즈 up
