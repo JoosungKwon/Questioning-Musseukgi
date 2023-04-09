@@ -1,0 +1,4 @@
+[submodule "client"]
+	path = client
+	url = https://github.com/JoosungKwon/Questioning-Musseukgi-Front.git
+	branch = main
