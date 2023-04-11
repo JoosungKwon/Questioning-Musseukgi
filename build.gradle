@@ -31,8 +31,14 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     // OpenFeign
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    // Security
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    // Mail
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
     // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
@@ -42,6 +48,13 @@ dependencies {
 
     // MySQL
     runtimeOnly 'com.mysql:mysql-connector-j'
+    //H2 Driver
+    runtimeOnly 'com.h2database:h2'
+
+    // JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
     // Flyway
     implementation 'org.flywaydb:flyway-core'
