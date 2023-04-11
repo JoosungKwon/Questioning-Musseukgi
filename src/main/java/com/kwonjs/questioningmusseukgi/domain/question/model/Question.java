@@ -1,4 +1,4 @@
-package com.kwonjs.questioningmusseukgi.question.model;
+package com.kwonjs.questioningmusseukgi.domain.question.model;
 
 import static javax.persistence.EnumType.*;
 import static javax.persistence.GenerationType.*;

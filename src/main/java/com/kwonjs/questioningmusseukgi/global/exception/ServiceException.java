@@ -1,4 +1,4 @@
-package com.kwonjs.questioningmusseukgi.exception;
+package com.kwonjs.questioningmusseukgi.global.exception;
 
 import lombok.Getter;
 

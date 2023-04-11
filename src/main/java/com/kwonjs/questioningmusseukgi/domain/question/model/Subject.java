@@ -1,4 +1,4 @@
-package com.kwonjs.questioningmusseukgi.question.model;
+package com.kwonjs.questioningmusseukgi.domain.question.model;
 
 import java.util.Arrays;
 import java.util.Objects;

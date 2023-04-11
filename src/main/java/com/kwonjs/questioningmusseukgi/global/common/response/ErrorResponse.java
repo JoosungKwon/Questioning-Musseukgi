@@ -1,6 +1,6 @@
-package com.kwonjs.questioningmusseukgi.common.response;
+package com.kwonjs.questioningmusseukgi.global.common.response;
 
-import com.kwonjs.questioningmusseukgi.exception.ErrorCode;
+import com.kwonjs.questioningmusseukgi.global.exception.ErrorCode;
 
 public record ErrorResponse(
 	String code,

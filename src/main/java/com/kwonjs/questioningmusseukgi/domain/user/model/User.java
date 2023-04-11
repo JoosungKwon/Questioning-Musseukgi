@@ -1,4 +1,4 @@
-package com.kwonjs.questioningmusseukgi.user.model;
+package com.kwonjs.questioningmusseukgi.domain.user.model;
 
 import static javax.persistence.GenerationType.*;
 import static lombok.AccessLevel.*;
@@ -46,4 +46,11 @@ public class User {
 
 	private boolean deleted;
 
+	public String getEmail() {
+		return null;
+	}
+
+	public String getPassword() {
+		return null;
+	}
 }
