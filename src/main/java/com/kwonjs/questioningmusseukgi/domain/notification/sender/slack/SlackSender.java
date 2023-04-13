@@ -38,7 +38,7 @@ public class SlackSender implements Sender {
 			client.send(URI.create(webhookUrl), objectMapper.writeValueAsString(payload));
 		} catch (IOException e) {
 			log.debug("IOException : {}", e.getMessage());
-			throw new SendSlackException(user.toString(), webhookUrl, channel);
+			throw new SendSlackException(user, webhookUrl, channel);
 		}
 
 	}

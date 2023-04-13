@@ -1,5 +1,6 @@
 package com.kwonjs.questioningmusseukgi.domain.notification.exception;
 
+import com.kwonjs.questioningmusseukgi.domain.user.model.User;
 import com.kwonjs.questioningmusseukgi.global.exception.ErrorCode;
 import com.kwonjs.questioningmusseukgi.global.exception.ServiceException;
 
@@ -12,8 +13,8 @@ public class SendSlackException extends ServiceException {
 
 	private static final ErrorCode ERROR_CODE = ErrorCode.SLACK_SEND_ERROR;
 
-	public SendSlackException(String... param) {
+	public SendSlackException(User user, String webhookUrl, String channel) {
 		super(ERROR_CODE);
-		log.debug(EXCEPTION_FORMAT, param);
+		log.debug(EXCEPTION_FORMAT, user, webhookUrl, channel);
 	}
 }
