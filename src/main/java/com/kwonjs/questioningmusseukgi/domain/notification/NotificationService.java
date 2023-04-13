@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class NotificationService {
 
-	@Value("${service.range}") private int RANGE;
+	@Value("${service.range}") private int RANGE; // 시간 단위
 
 	private final UserService userService;
 	private final QuestionService questionService;
