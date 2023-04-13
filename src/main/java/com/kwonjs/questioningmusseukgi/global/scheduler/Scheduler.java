@@ -1,4 +1,4 @@
-package com.kwonjs.questioningmusseukgi.scheduler;
+package com.kwonjs.questioningmusseukgi.global.scheduler;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Async;

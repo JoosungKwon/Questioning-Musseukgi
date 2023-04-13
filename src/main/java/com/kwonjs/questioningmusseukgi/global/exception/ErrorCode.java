@@ -1,4 +1,4 @@
-package com.kwonjs.questioningmusseukgi.exception;
+package com.kwonjs.questioningmusseukgi.global.exception;
 
 import org.springframework.http.HttpStatus;
 
@@ -16,7 +16,14 @@ public enum ErrorCode {
 	MISSING_INPUT_VALUE(HttpStatus.BAD_REQUEST, "C003", "인자가 부족합니다."),
 	NOT_EXIST_API(HttpStatus.BAD_REQUEST, "C004", "요청 주소가 올바르지 않습니다."),
 	METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, "C005", "요청 메서드가 올바르지 않습니다."),
-	HANDLE_ACCESS_DENIED(HttpStatus.FORBIDDEN, "C006", "접근 권한이 없습니다.");
+	HANDLE_ACCESS_DENIED(HttpStatus.FORBIDDEN, "C006", "접근 권한이 없습니다."),
+
+	// User
+	USER_NOT_FOUND(HttpStatus.NOT_FOUND, "U001", "유저를 찾을 수 없습니다."),
+
+	// Auth
+	EXPIRED_TOKEN(HttpStatus.FORBIDDEN,"A001","만료된 토큰입니다."),
+	INVALID_TOKEN(HttpStatus.FORBIDDEN,"A002","유효하지 않은 토큰입니다.");
 
 	private final HttpStatus status;
 	private final String code;

@@ -1,4 +1,4 @@
-package com.kwonjs.questioningmusseukgi.question.model;
+package com.kwonjs.questioningmusseukgi.domain.question.model;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum Subject {
 
-	JAVA, SPRING, OS, NETWORK, DATABASE, DATA_STRUCTURE, ALGORITHM, ETC;
+	JAVA, SPRING, OS, NETWORK, DATABASE, DATA_STRUCTURE, ALGORITHM, INFRA, GIT, ETC;
 
 	@JsonCreator
 	public static Subject of(String subjectName) {
