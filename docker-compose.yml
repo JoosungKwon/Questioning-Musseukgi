@@ -1,7 +1,18 @@
 version: '3'
 services:
+  web:
+    container_name: web
+    image: nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /root/nginx:/etc/nginx/conf.d
+      - /etc/letsencrypt:/etc/letsencrypt
+
   db:
-    container_name: questioning-musseukgi-db
+    container_name: db
     image: mysql
     environment:
       MYSQL_DATABASE: app
