@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    container_name: web
+    container_name: qm-web
     image: nginx
     restart: always
     ports:
@@ -12,7 +12,7 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt
 
   db:
-    container_name: db
+    container_name: qm-db
     image: mysql
     environment:
       MYSQL_DATABASE: app
@@ -25,11 +25,21 @@ services:
       - ./mysqldata:/var/lib/mysql
     restart: always
 
+  front:
+    container_name: qm-front
+    image: joosungkwon/questioning-musseukgi-front
+    expose:
+      - "3000"
+    restart: always
+
   app:
-    container_name: app
+    container_name: qm-app
     image: joosungkwon/questioning-musseukgi
     ports:
-      - "8080:8080"
+      - "8080"
+    restart: always
+    depends_on:
+      - db
     environment:
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
