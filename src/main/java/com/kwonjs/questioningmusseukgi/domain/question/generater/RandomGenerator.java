@@ -1,7 +1,7 @@
 package com.kwonjs.questioningmusseukgi.domain.question.generater;
 
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,10 +13,9 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class RandomGenerator implements Generator { // 랜덤한 문제를 생성하는 클래스
+public class RandomGenerator implements Generator  { // 랜덤한 문제를 생성하는 클래스
 
 	private final QuestionRepository questionRepository;
-	private final Random random = new Random();
 
 	@Override
 	@Transactional(readOnly = true)
@@ -24,7 +23,7 @@ public class RandomGenerator implements Generator { // 랜덤한 문제를 생�
 
 		List<Question> questions = questionRepository.findAll();
 
-		int randomIndex = random.nextInt(questions.size());
+		int randomIndex = ThreadLocalRandom.current().nextInt(questions.size());
 
 		return questions.get(randomIndex);
 	}
