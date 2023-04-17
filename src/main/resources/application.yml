@@ -47,3 +47,6 @@ logging:
 
 service:
   range: 10
+
+openai:
+  api-key: ${OPENAI_API_KEY}
