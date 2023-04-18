@@ -86,4 +86,15 @@ public class SlackMessageBuilder {
 		return originBlocks;
 	}
 
+	public List<LayoutBlock> buildWaitMessageFormat(String waitingMessage) {
+
+		List<LayoutBlock> messageFormat = new ArrayList<>();
+
+		messageFormat.add(1, section(section -> section
+			.text(plainText(pt -> pt
+				.text(waitingMessage)
+				.emoji(true)))));
+
+		return messageFormat;
+	}
 }

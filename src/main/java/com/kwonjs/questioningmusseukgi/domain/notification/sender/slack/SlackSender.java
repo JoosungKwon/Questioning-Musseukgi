@@ -20,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SlackSender implements Sender {
 
 	private final String DISPLAY_MESSAGE = "머쓱이가 메시지를 보냈습니다!";
+	private final String WAITING_MESSAGE = "잠시만 기다려주세요! 면접관 머쓱이가 답변을 평가하는 중입니다...(30초 가량 소요됩니다.)";
 
 	private final SlackConfig slackConfig;
 	private final SlackClient slackClient;
@@ -52,6 +53,14 @@ public class SlackSender implements Sender {
 		slackClient.sendReplyResponse(responseUrl, replyBlocks, true);
 
 		log.debug("Send ReplyResponse to slack URL: {}, message: {}", responseUrl, replyBlocks);
+	}
+
+	public void sendWaitMessage(String responseUrl) {
+
+		List<LayoutBlock> waitMessage =
+			slackMessageBuilder.buildWaitMessageFormat(WAITING_MESSAGE);
+
+		slackClient.sendReplyResponse(responseUrl, waitMessage,true);
 	}
 }
 
