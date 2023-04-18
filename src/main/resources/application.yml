@@ -47,3 +47,14 @@ logging:
 
 service:
   range: 10
+slack:
+  oauth:
+    token: ${SLACK_OAUTH_TOKEN}
+
+openai:
+  api-key: ${OPENAI_API_KEY}
+  request-url: https://api.openai.com/v1/completions
+  model: text-davinci-003
+  max-token: 3000
+  temperature: 1.0
+  top-p: 1.0
