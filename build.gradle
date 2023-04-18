@@ -46,6 +46,11 @@ dependencies {
     // Flyway
     implementation 'org.flywaydb:flyway-core'
     implementation 'org.flywaydb:flyway-mysql'
+
+    // Slack
+    implementation 'com.slack.api:slack-api-client:1.29.2'
+    implementation 'com.slack.api:slack-api-model:1.29.2'
+    implementation 'com.slack.api:slack-app-backend:1.29.2'
 }
 
 dependencyManagement {
