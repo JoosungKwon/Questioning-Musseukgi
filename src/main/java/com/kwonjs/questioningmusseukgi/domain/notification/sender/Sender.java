@@ -4,5 +4,5 @@ import com.kwonjs.questioningmusseukgi.domain.question.model.Question;
 import com.kwonjs.questioningmusseukgi.domain.user.model.User;
 
 public interface Sender {
-	void sendTo(User user, Question question);
+	void send(User user, Question question);
 }

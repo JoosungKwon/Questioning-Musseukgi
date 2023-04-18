@@ -19,6 +19,6 @@ public class SenderService {
 	public void send(User user, Question question) {
 		String senderName = user.getSenderName();
 		Sender sender = senderProvider.get(senderName + "Sender");
-		sender.sendTo(user, question);
+		sender.send(user, question);
 	}
 }
