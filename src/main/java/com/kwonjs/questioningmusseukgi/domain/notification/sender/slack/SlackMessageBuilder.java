@@ -90,7 +90,7 @@ public class SlackMessageBuilder {
 
 		List<LayoutBlock> messageFormat = new ArrayList<>();
 
-		messageFormat.add(1, section(section -> section
+		messageFormat.add(section(section -> section
 			.text(plainText(pt -> pt
 				.text(waitingMessage)
 				.emoji(true)))));
