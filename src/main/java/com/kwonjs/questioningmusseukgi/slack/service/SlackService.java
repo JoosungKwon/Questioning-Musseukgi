@@ -49,9 +49,13 @@ public class SlackService {
 	}
 
 	public void sendWaitMessage(String responseUrl) {
+		sendWaitMessage(responseUrl, WAITING_MESSAGE);
+	}
+
+	public void sendWaitMessage(String responseUrl, String message) {
 
 		List<LayoutBlock> waitMessage =
-			slackMessageBuilder.buildWaitMessageFormat(WAITING_MESSAGE);
+			slackMessageBuilder.buildWaitMessageFormat(message);
 
 		slackClient.sendReplyResponse(responseUrl, waitMessage,true);
 	}
