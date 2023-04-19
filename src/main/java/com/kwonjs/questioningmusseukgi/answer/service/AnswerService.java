@@ -42,7 +42,7 @@ public class AnswerService {
 		String gptAsking = String.format(settingMessage, question, userAnswer);
 		String gptAnswer = chatGptService.sendTo(gptAsking);
 
-		log.debug("Asked ChatGPT \n Question({}) \n Got Answer({}).", gptAsking, gptAnswer);
+		log.info("Asked ChatGPT \n Question({}) \n Got Answer({}).", gptAsking, gptAnswer);
 
 		// 사용자 답변을 저장하는 로직 추가
 		Answer answer = new Answer(channelId, userAnswer);

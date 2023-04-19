@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -45,6 +46,19 @@ public class User {
 	private LocalTime notificationTime;
 
 	private boolean deleted;
+
+	@Builder
+	public User(String nickname, String musseukgiName, String iconEmoji, String channel, String slackWebhookUrl,
+		String generatorType, String senderName, LocalTime notificationTime) {
+		this.nickname = nickname;
+		this.musseukgiName = musseukgiName;
+		this.iconEmoji = iconEmoji;
+		this.channel = channel;
+		this.slackWebhookUrl = slackWebhookUrl;
+		this.generatorType = generatorType;
+		this.senderName = senderName;
+		this.notificationTime = notificationTime;
+	}
 
 	public String getEmail() {
 		return null;

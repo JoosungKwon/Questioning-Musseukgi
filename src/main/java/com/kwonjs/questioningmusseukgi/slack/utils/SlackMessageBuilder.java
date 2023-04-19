@@ -3,15 +3,16 @@ package com.kwonjs.questioningmusseukgi.slack.utils;
 import static com.slack.api.model.block.Blocks.*;
 import static com.slack.api.model.block.composition.BlockCompositions.*;
 import static com.slack.api.model.block.element.BlockElements.*;
+import static lombok.AccessLevel.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-
 import com.slack.api.model.block.LayoutBlock;
 
-@Component
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = PRIVATE)
 public class SlackMessageBuilder {
 
 	private static final String DEFAULT_HEADER_CONTENT = " :yes_mussg: 안녕! 나는 머쓱이라고 해";
@@ -20,7 +21,7 @@ public class SlackMessageBuilder {
 	private static final String ACTION_ID_ANSWER = "answer";
 
 	// TODO: 어떻게하면 메시지 포맷을 추상화할 수 있을지 고민이 필요함떠
-	public List<LayoutBlock> buildAskFormat(String message) {
+	public static List<LayoutBlock> buildAskFormat(String message) {
 
 		List<LayoutBlock> messageFormat = new ArrayList<>();
 
@@ -65,7 +66,7 @@ public class SlackMessageBuilder {
 		return messageFormat;
 	}
 
-	public List<LayoutBlock> buildReplyFormat(List<LayoutBlock> originBlocks,
+	public static List<LayoutBlock> buildReplyFormat(List<LayoutBlock> originBlocks,
 		String answer, String evaluate) {
 
 		originBlocks.remove(4);
@@ -86,7 +87,7 @@ public class SlackMessageBuilder {
 		return originBlocks;
 	}
 
-	public List<LayoutBlock> buildWaitMessageFormat(String waitingMessage) {
+	public static List<LayoutBlock> buildWaitMessageFormat(String waitingMessage) {
 
 		List<LayoutBlock> messageFormat = new ArrayList<>();
 

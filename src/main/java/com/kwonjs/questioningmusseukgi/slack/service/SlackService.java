@@ -23,15 +23,14 @@ public class SlackService {
 
 	private final SlackConfig slackConfig;
 	private final SlackClient slackClient;
-	private final SlackMessageBuilder slackMessageBuilder;
 
 	public void sendTo(String channelId, String message) {
 
-		List<LayoutBlock> blocks = slackMessageBuilder.buildAskFormat(message);
+		List<LayoutBlock> blocks = SlackMessageBuilder.buildAskFormat(message);
 
 		slackClient.sendChatPostMessage(slackConfig.getOauthToken(), channelId, blocks, DISPLAY_MESSAGE);
 
-		log.debug("Send ChatPostMessage to slack channelId: {}, message: {}", channelId, blocks);
+		log.info("Send ChatPostMessage to slack channelId: {}, message: {}", channelId, blocks);
 	}
 
 	public void reply(BlockActionPayload blockActionPayload, String answer, String evaluate){
@@ -41,19 +40,24 @@ public class SlackService {
 		List<LayoutBlock> originBlocks = blockActionPayload.getMessage().getBlocks();
 
 		List<LayoutBlock> replyBlocks
-			= slackMessageBuilder.buildReplyFormat(originBlocks, answer, evaluate);
+			= SlackMessageBuilder.buildReplyFormat(originBlocks, answer, evaluate);
 
 		slackClient.sendReplyResponse(responseUrl, replyBlocks, true);
 
-		log.debug("Send ReplyResponse to slack URL: {}, message: {}", responseUrl, replyBlocks);
+		log.info("Send ReplyResponse to slack URL: {}, message: {}", responseUrl, replyBlocks);
 	}
 
 	public void sendWaitMessage(String responseUrl) {
+		sendMessage(responseUrl, WAITING_MESSAGE, true);
+	}
 
-		List<LayoutBlock> waitMessage =
-			slackMessageBuilder.buildWaitMessageFormat(WAITING_MESSAGE);
+	public void sendMessage(String responseUrl, String message, boolean replaceFlag) {
 
-		slackClient.sendReplyResponse(responseUrl, waitMessage,true);
+		List<LayoutBlock> blocks =
+			SlackMessageBuilder.buildWaitMessageFormat(message);
+
+		slackClient.sendReplyResponse(responseUrl, blocks, replaceFlag);
+		log.info("Send WaitMessage to slack URL: {}, message: {}", responseUrl, blocks);
 	}
 }
 

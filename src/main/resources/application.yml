@@ -57,4 +57,20 @@ openai:
   top-p: 1.0
 
 slack:
+  client-id: ${SLACK_CLIENT_ID}
+  client-secret: ${SLACK_CLIENT_SECRET}
   oauth-token: ${SLACK_OAUTH_TOKEN}
+  redirect-uri: https://slack.com/oauth/v2/authorize
+  scopes:
+    - chat:write
+    - chat:write.public
+    - channels:history
+    - channels:read
+    - users:read
+    - users:read.email
+    - users:read:email
+
+#  app-id: ${SLACK_APP_ID}
+#  client-secret: ${SLACK_CLIENT_SECRET}
+#  signing-secret: ${SLACK_SIGNING_SECRET}
+#  verification-token: ${SLACK_VERIFICATION_TOKEN}

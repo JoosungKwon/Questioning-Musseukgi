@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 @ConstructorBinding
-@ConfigurationProperties("openai")
+@ConfigurationProperties(prefix = "openai")
 public final class ChatGptConfig {
 	private final String apiKey;
 	private final String requestUrl;
