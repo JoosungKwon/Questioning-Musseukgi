@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kwonjs.questioningmusseukgi.slack.service.SlackService;
+import com.kwonjs.questioningmusseukgi.slack.utils.SlackMessageMapper;
 import com.kwonjs.questioningmusseukgi.user.model.User;
 import com.kwonjs.questioningmusseukgi.user.repository.UserRepository;
 import com.slack.api.app_backend.slash_commands.payload.SlashCommandPayload;
@@ -27,23 +28,28 @@ public class CommandController {
 	private final SlackService slackService;
 	private final UserRepository userRepository;
 
-	@PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public void subscribe(@RequestParam MultiValueMap<String, Object> payload) {
-		log.info("Slack Command Action Payload: {}", payload);
 
+		log.info("Slack Command Action String Payload: {}", payload);
 
-		// String command = slashCommandPayload.getCommand();
-		//
-		// final String responseUrl = slashCommandPayload.getResponseUrl();
-		//
-		//
-		// slackService.sendWaitMessage(responseUrl, "명령어를 처리하고 있습니다.");
-		//
-		// switch (command) {
-		// 	case "/subscribe" -> registerUser(slashCommandPayload);
-		// }
+		SlashCommandPayload slashCommandPayload =
+			SlackMessageMapper.covertSlashCommandPayload(payload);
 
-		// slackService.sendWaitMessage(responseUrl, "정상적으로 구독이 완료되었습니다.");
+		String command = slashCommandPayload.getCommand();
+
+		log.info("Slack Command Action Payload: {}", slashCommandPayload);
+
+		final String responseUrl = slashCommandPayload.getResponseUrl();
+
+		slackService.sendMessage(responseUrl, "명령어를 처리하고 있습니다.", true);
+
+		switch (command) {
+			case "/subscribe" -> registerUser(slashCommandPayload);
+			// case "/change" -> registerUser(slashCommandPayload);
+		}
+
+		slackService.sendMessage(responseUrl, "정상적으로 구독이 완료되었습니다.", true);
 	}
 
 	private void registerUser(SlashCommandPayload payload) {
@@ -58,10 +64,12 @@ public class CommandController {
 
 		User user = User.builder()
 			.nickname(userName)
-			.musseukgiName(null)
+			.musseukgiName("머쓱이")
 			.channel(channelId)
+			.slackWebhookUrl("https://hooks.slack.com/")
 			.generatorType("random")
 			.senderName("slack")
+			.iconEmoji("musseukgi")
 			.notificationTime(time)
 			.build();
 

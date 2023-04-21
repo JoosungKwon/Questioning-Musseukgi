@@ -1,19 +1,22 @@
 package com.kwonjs.questioningmusseukgi.slack.Interactivity;
 
-import static org.springframework.http.HttpStatus.*;
+import java.lang.reflect.Type;
+import java.util.Map;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.reflect.TypeToken;
 import com.kwonjs.questioningmusseukgi.answer.service.AnswerService;
+import com.kwonjs.questioningmusseukgi.slack.event.SlackMessage;
 import com.kwonjs.questioningmusseukgi.slack.service.SlackService;
+import com.kwonjs.questioningmusseukgi.slack.utils.SlackMessageMapper;
+import com.kwonjs.questioningmusseukgi.slack.utils.SlackMessageParser;
 import com.slack.api.app_backend.interactive_components.payload.BlockActionPayload;
-import com.slack.api.model.block.InputBlock;
-import com.slack.api.model.block.SectionBlock;
+import com.slack.api.model.block.LayoutBlock;
 import com.slack.api.util.json.GsonFactory;
 
 import lombok.RequiredArgsConstructor;
@@ -29,37 +32,40 @@ public class InteractivityController {
 	private final AnswerService answerService;
 	private final SlackService slackService;
 
-	@PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	@ResponseStatus(OK)
+	@PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public void evaluateAnswerFromSlack(@RequestParam String payload) {
 
-		// Json String -> BlockActionPayload Parse
-		BlockActionPayload blockActionPayload =
-			GsonFactory.createSnakeCase()
-				.fromJson(payload, BlockActionPayload.class);
+		Type type = new TypeToken<Map<String, Object>>() {}.getType();
+		Map<String, Object> payloadMap = GsonFactory.createSnakeCase().fromJson(payload, type);
 
-		log.info("Slack Action Payload: {}", payload);
+		String responseUrl = String.valueOf(payloadMap.get("response_url"));
+
+		if ("delete".equals(String.valueOf(payloadMap.get("callback_id")))) {
+			slackService.sendMessage(responseUrl, "메시지가 삭제되었습니다.", true);
+			return;
+		}
+
+		// Json String -> BlockActionPayload Parse
+		BlockActionPayload blockActionPayload = SlackMessageMapper.covertBlockActionPayload(payload);
+
+		log.info("Slack Action Payload: {}", blockActionPayload);
 
 		// GPT에게 답변을 받아서 보내는 과정이 길기 때문에 대기 중 메시지 먼저 응답
-		slackService.sendWaitMessage(blockActionPayload.getResponseUrl());
+		slackService.sendWaitMessage(responseUrl);
+
+		LayoutBlock layoutBlock = blockActionPayload.getMessage().getBlocks().get(3);
+
+		if (layoutBlock instanceof com.slack.api.model.block.SectionBlock) {
+			slackService.sendMessage(blockActionPayload.getResponseUrl(), "이미 답변된 평가입니다.", false);
+		}
 
 		// Parsing Slack Message Data
-		// TODO: SlackMessageParser 추가하기
-		// TODO: 조건 에 따라 다른 파싱 과정이 필요함
-		SectionBlock sectionBlock = (SectionBlock) blockActionPayload.getMessage().getBlocks().get(1);
-		InputBlock inputBlock = (InputBlock) blockActionPayload.getMessage().getBlocks().get(3);
+		SlackMessage slackMessage = SlackMessageParser.parseMessageType(blockActionPayload);
+		log.info("Slack Message: {}", slackMessage);
 
-		String channelId = blockActionPayload.getChannel().getId();
-		String question = sectionBlock.getText().getText();
-		String userAnswer = blockActionPayload
-			.getState()
-			.getValues()
-			.get(inputBlock.getBlockId())
-			.get("input")
-			.getValue();
+		// getAnswerFromGPT(slackMessage);
+		String evaluation = answerService.evaluate(slackMessage.getChannelId(), slackMessage.getQuestion(), slackMessage.getUserAnswer());
 
-		String evaluation = answerService.evaluate(channelId, question, userAnswer);
-
-		slackService.reply(blockActionPayload, userAnswer, evaluation);
+		slackService.reply(blockActionPayload, slackMessage.getUserAnswer(), evaluation);
 	}
 }

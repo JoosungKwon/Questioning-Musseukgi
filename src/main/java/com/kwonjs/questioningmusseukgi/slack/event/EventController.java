@@ -1,9 +1,6 @@
 package com.kwonjs.questioningmusseukgi.slack.event;
 
-import static org.springframework.http.MediaType.*;
-
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,13 +15,14 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class EventController {
 
-	@PostMapping(produces = APPLICATION_JSON_VALUE)
+	@PostMapping
 	public ResponseEntity<EventResponse> evaluateAnswerFromSlack(
-		@RequestBody MultiValueMap<String, Object> event) {
+		@RequestBody String event) {
 
 		log.info("Slack Event: {}", event);
+		// event.getFirst("challenge")
 
-		return ResponseEntity.ok(new EventResponse(String.valueOf(event.get("challenge"))));
+		return ResponseEntity.ok(new EventResponse(event));
 	}
 
 
