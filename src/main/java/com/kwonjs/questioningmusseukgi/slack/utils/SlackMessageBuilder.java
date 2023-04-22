@@ -87,6 +87,18 @@ public class SlackMessageBuilder {
 		return originBlocks;
 	}
 
+	public static List<LayoutBlock> buildDeleteFormat(List<LayoutBlock> originBlocks) {
+
+		originBlocks.clear();
+
+		originBlocks.add(section(section -> section
+			.text(plainText(pt -> pt
+				.text("메시지가 삭제되었습니다.")
+				.emoji(true)))));
+
+		return originBlocks;
+	}
+
 	public static List<LayoutBlock> buildWaitMessageFormat(String waitingMessage) {
 
 		List<LayoutBlock> messageFormat = new ArrayList<>();
