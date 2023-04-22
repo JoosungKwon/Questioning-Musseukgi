@@ -40,13 +40,13 @@ public class InteractivityController {
 
 		String responseUrl = String.valueOf(payloadMap.get("response_url"));
 
-		if ("delete".equals(String.valueOf(payloadMap.get("callback_id")))) {
-			slackService.sendMessage(responseUrl, "메시지가 삭제되었습니다.", true);
-			return;
-		}
-
 		// Json String -> BlockActionPayload Parse
 		BlockActionPayload blockActionPayload = SlackMessageMapper.covertBlockActionPayload(payload);
+
+		if ("delete".equals(String.valueOf(payloadMap.get("callback_id")))) {
+			slackService.deleteMessage(blockActionPayload);
+			return;
+		}
 
 		log.info("Slack Action Payload: {}", blockActionPayload);
 

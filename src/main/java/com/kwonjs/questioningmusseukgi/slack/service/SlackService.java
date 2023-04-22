@@ -59,6 +59,20 @@ public class SlackService {
 		slackClient.sendReplyResponse(responseUrl, blocks, replaceFlag);
 		log.info("Send WaitMessage to slack URL: {}, message: {}", responseUrl, blocks);
 	}
+
+	public void deleteMessage(BlockActionPayload blockActionPayload) {
+
+		String responseUrl = blockActionPayload.getResponseUrl();
+
+		List<LayoutBlock> originBlocks = blockActionPayload.getMessage().getBlocks();
+
+		List<LayoutBlock> replyBlocks
+			= SlackMessageBuilder.buildDeleteFormat(originBlocks);
+
+		slackClient.sendReplyResponse(responseUrl, replyBlocks, true);
+
+		log.info("Send ReplyResponse to slack URL: {}, message: {}", responseUrl, replyBlocks);
+	}
 }
 
 
