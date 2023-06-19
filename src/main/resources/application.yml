@@ -70,6 +70,13 @@ slack:
     - users:read.email
     - users:read:email
 
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 600000
+        readTimeout: 100000
+
 #  app-id: ${SLACK_APP_ID}
 #  client-secret: ${SLACK_CLIENT_SECRET}
 #  signing-secret: ${SLACK_SIGNING_SECRET}
