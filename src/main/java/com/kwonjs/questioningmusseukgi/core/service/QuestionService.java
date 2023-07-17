@@ -1,0 +1,32 @@
+package com.kwonjs.questioningmusseukgi.core.service;
+
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
+import com.kwonjs.questioningmusseukgi.core.domain.question.Question;
+import com.kwonjs.questioningmusseukgi.core.generater.Generator;
+import com.kwonjs.questioningmusseukgi.user.model.User;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class QuestionService {
+
+	private final Map<String, Generator> generatorMap;
+
+	public Question generateBy(User user) { // TODO: 추후에 사용자 설정에 맞춰서 질문을 가져올 수 있도록 확장 및 알고리즘 변경
+		Generator generator = generatorMap.get(user.getGeneratorType() + "Generator");
+
+		log.info("start generate question By {}", generator.getClass().getSimpleName());
+
+		Question question = generator.generate();
+
+		log.info("finish generate question : {}", question);
+
+		return question;
+	}
+}
