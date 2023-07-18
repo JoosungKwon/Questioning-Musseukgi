@@ -64,7 +64,7 @@ jobs:
       - name: Docker Build & Push to Hub
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/questioning-musseukgi .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/questioning-musseukgi -f ./.docker/Dockerfile .
           docker push ${{ secrets.DOCKER_USERNAME }}/questioning-musseukgi:latest
 
       # 도커 컴포즈 설정 파일 서버로 전달하기(복사 후 붙여넣기)
@@ -75,7 +75,7 @@ jobs:
           username: ${{ secrets.DEV_USERNAME }}
           password: ${{ secrets.DEV_PASSWORD }}
           port: 22
-          source: "./docker-compose.yml"
+          source: "./.docker/docker-compose.yml"
           target: "/root"
 
       # 도커 컴포즈 실행하기
